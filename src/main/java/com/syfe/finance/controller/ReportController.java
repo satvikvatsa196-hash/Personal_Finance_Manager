@@ -1,6 +1,8 @@
 package com.syfe.finance.controller;
 
+import com.syfe.finance.exception.ApiException;
 import com.syfe.finance.service.ReportService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,9 @@ public class ReportController {
 
     @GetMapping("/monthly/{year}/{month}")
     public MonthlyReportResponse monthly(Authentication authentication, @PathVariable int year, @PathVariable int month) {
+        if (month < 1 || month > 12) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Month must be between 1 and 12");
+        }
         ReportService.ReportData data = reportService.monthly(authentication.getName(), year, month);
         return new MonthlyReportResponse(month, year, data.totalIncome(), data.totalExpenses(), data.netSavings());
     }

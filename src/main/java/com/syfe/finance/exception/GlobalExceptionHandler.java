@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.time.DateTimeException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(Map.of("message", message));
     }
 
-    @ExceptionHandler({ConstraintViolationException.class, MethodArgumentTypeMismatchException.class})
+    @ExceptionHandler({ConstraintViolationException.class, MethodArgumentTypeMismatchException.class, DateTimeException.class})
     public ResponseEntity<Map<String, String>> handleBadRequest(Exception ex) {
         return ResponseEntity.badRequest().body(Map.of("message", ex.getMessage()));
     }
