@@ -50,9 +50,9 @@ public class CategoryController {
     public record CategoryRequest(@NotBlank String name, @NotNull CategoryType type) {
     }
 
-    public record CategoryResponse(String name, CategoryType type, @JsonProperty("isCustom") boolean isCustom) {
+    public record CategoryResponse(String name, CategoryType type, @JsonProperty("isCustom") boolean isCustom, boolean custom) {
         static CategoryResponse from(Category category) {
-            return new CategoryResponse(category.name(), category.type(), category.custom());
+            return new CategoryResponse(category.name(), category.type(), category.custom(), category.custom());
         }
     }
 }

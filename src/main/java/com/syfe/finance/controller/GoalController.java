@@ -64,7 +64,7 @@ public class GoalController {
     private GoalResponse toResponse(String username, SavingsGoal goal) {
         GoalService.GoalProgress progress = goalService.progress(username, goal);
         return new GoalResponse(goal.id(), goal.goalName(), goal.targetAmount(), goal.targetDate(), goal.startDate(),
-                progress.currentProgress(), progress.progressPercentage(), progress.remainingAmount());
+                progress.currentProgress(), progress.progressPercentage().doubleValue(), progress.remainingAmount());
     }
 
     public record CreateGoalRequest(
@@ -88,7 +88,7 @@ public class GoalController {
             LocalDate targetDate,
             LocalDate startDate,
             BigDecimal currentProgress,
-            BigDecimal progressPercentage,
+            double progressPercentage,
             BigDecimal remainingAmount
     ) {
     }
